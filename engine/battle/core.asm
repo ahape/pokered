@@ -4160,15 +4160,15 @@ GetDamageVarsForPlayerAttack:
 	ld a, [wCriticalHitOrOHKO]
 	and a ; check for critical hit
 	jr z, .scaleStats
-; in the case of a critical hit, reset the player's attack and the enemy's defense to their base values
-	ld c, 3 ; defense stat
-	call GetEnemyMonStat
-	ldh a, [hProduct + 2]
+	;ld c, 3 ; defense stat
+	;call GetEnemyMonStat
+        ld hl, wEnemyMonDefense
+	ld a, [hli]
 	ld b, a
-	ldh a, [hProduct + 3]
+	ld a, [hld]
 	ld c, a
 	push bc
-	ld hl, wPartyMon1Attack
+	ld hl, wBattleMonAttack
 	ld a, [wPlayerMonNumber]
 	ld bc, wPartyMon2 - wPartyMon1
 	call AddNTimes
@@ -4193,14 +4193,15 @@ GetDamageVarsForPlayerAttack:
 	and a ; check for critical hit
 	jr z, .scaleStats
 ; in the case of a critical hit, reset the player's and enemy's specials to their base values
-	ld c, 5 ; special stat
-	call GetEnemyMonStat
-	ldh a, [hProduct + 2]
+	;ld c, 5 ; special stat
+	;call GetEnemyMonStat 
+        ld hl, wEnemyMonSpecial
+	ld a, [hli]
 	ld b, a
-	ldh a, [hProduct + 3]
+	ld a, [hld]
 	ld c, a
 	push bc
-	ld hl, wPartyMon1Special
+	ld hl, wBattleMonSpecial
 	ld a, [wPlayerMonNumber]
 	ld bc, wPartyMon2 - wPartyMon1
 	call AddNTimes
@@ -4274,7 +4275,7 @@ GetDamageVarsForEnemyAttack:
 	and a ; check for critical hit
 	jr z, .scaleStats
 ; in the case of a critical hit, reset the player's defense and the enemy's attack to their base values
-	ld hl, wPartyMon1Defense
+	ld hl, wBattleMonDefense
 	ld a, [wPlayerMonNumber]
 	ld bc, wPartyMon2 - wPartyMon1
 	call AddNTimes
@@ -4282,9 +4283,9 @@ GetDamageVarsForEnemyAttack:
 	ld b, a
 	ld c, [hl]
 	push bc
-	ld c, 2 ; attack stat
-	call GetEnemyMonStat
-	ld hl, hProduct + 2
+	;ld c, 2 ; attack stat
+	;call GetEnemyMonStat
+	ld hl, wEnemyMonAttack
 	pop bc
 	jr .scaleStats
 .specialAttack
@@ -4306,7 +4307,7 @@ GetDamageVarsForEnemyAttack:
 	and a ; check for critical hit
 	jr z, .scaleStats
 ; in the case of a critical hit, reset the player's and enemy's specials to their base values
-	ld hl, wPartyMon1Special
+	ld hl, wBattleMonSpecial
 	ld a, [wPlayerMonNumber]
 	ld bc, wPartyMon2 - wPartyMon1
 	call AddNTimes
@@ -4314,9 +4315,9 @@ GetDamageVarsForEnemyAttack:
 	ld b, a
 	ld c, [hl]
 	push bc
-	ld c, 5 ; special stat
-	call GetEnemyMonStat
-	ld hl, hProduct + 2
+	;ld c, 5 ; special stat
+	;call GetEnemyMonStat
+	ld hl, wEnemyMonAttack
 	pop bc
 ; if either the offensive or defensive stat is too large to store in a byte, scale both stats by dividing them by 4
 ; this allows values with up to 10 bits (values up to 1023) to be handled
