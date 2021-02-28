@@ -3141,6 +3141,8 @@ wBoxMonNicksEnd::
 
 wBoxDataEnd::
 
+wTemp1:: ds NAME_LENGTH
+
 
 SECTION "Stack", WRAM0
 

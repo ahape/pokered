@@ -2017,15 +2017,8 @@ DisplayBattleMenu::
 	ld a, [wBattleType]
 	dec a
 	jp nz, .handleBattleMenuInput
-; the following happens for the old man tutorial
-	; Temporarily save the player name in wLinkEnemyTrainerName.
-	; Since wLinkEnemyTrainerName == wGrassRate, this affects wild encounters.
-	; The wGrassRate byte and following wGrassMons buffer are supposed
-	; to get overwritten when entering a map with wild Pokémon,
-	; but an oversight prevents this in Cinnabar and Route 21,
-	; so the infamous MissingNo. glitch can show up.
 	ld hl, wPlayerName
-	ld de, wLinkEnemyTrainerName
+	ld de, wTemp1
 	ld bc, NAME_LENGTH
 	call CopyData
 	ld hl, .oldManName
