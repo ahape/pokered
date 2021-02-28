@@ -453,6 +453,9 @@ UpdateStat:
 	ld [hl], a
 	pop hl
 UpdateStatDone:
+	ldh a, [hWhoseTurn]
+	and a
+	call z, ApplyBadgeStatBoost ; Apply badge boost here (not sure exec order matters)
 	ld b, c
 	inc b
 	call PrintStatText
@@ -483,7 +486,7 @@ UpdateStatDone:
 	call PlayCurrentMoveAnimation
 	ld a, [de]
 	cp MINIMIZE
-	jr nz, .applyBadgeBoostsAndStatusPenalties
+	jr nz, .applyStatusPenalties
 	pop bc
 	ld a, $1
 	ld [bc], a
@@ -491,11 +494,7 @@ UpdateStatDone:
 	ld b, BANK(ReshowSubstituteAnim)
 	pop af
 	call nz, Bankswitch
-.applyBadgeBoostsAndStatusPenalties
-	ldh a, [hWhoseTurn]
-	and a
-	call z, ApplyBadgeStatBoosts ; whenever the player uses a stat-up move, badge boosts get reapplied again to every stat,
-	                             ; even to those not affected by the stat-up move (will be boosted further)
+.applyStatusPenalties
 	ld hl, MonsStatsRoseText
 	call PrintText
 
@@ -672,6 +671,9 @@ UpdateLoweredStat:
 	pop de
 	pop hl
 UpdateLoweredStatDone:
+	ldh a, [hWhoseTurn]
+	and a
+	call nz, ApplyBadgeStatBoost
 	ld b, c
 	inc b
 	push de
@@ -682,10 +684,6 @@ UpdateLoweredStatDone:
 	jr nc, .ApplyBadgeBoostsAndStatusPenalties
 	call PlayCurrentMoveAnimation2
 .ApplyBadgeBoostsAndStatusPenalties
-	ldh a, [hWhoseTurn]
-	and a
-	call nz, ApplyBadgeStatBoosts ; whenever the player uses a stat-down move, badge boosts get reapplied again to every stat,
-	                              ; even to those not affected by the stat-up move (will be boosted further)
 	ld hl, MonsStatsFellText
 	call PrintText
 
