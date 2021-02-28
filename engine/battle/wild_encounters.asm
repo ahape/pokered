@@ -75,7 +75,8 @@ TryDoWildEncounter:
 	add hl, bc
 	ld a, [hli]
 	ld [wCurEnemyLVL], a
-	ld a, [hl]
+        call GetRandomPokemon
+	;ld a, [hl] ; I think this is the place we need to randomize the encounter
 	ld [wcf91], a
 	ld [wEnemyMonSpecies2], a
 	ld a, [wRepelRemainingSteps]
@@ -100,5 +101,93 @@ TryDoWildEncounter:
 .willEncounter
 	xor a
 	ret
+
+; get random number, assign it to `a`
+; check to see if that number is on the black list, or outside the bounds of pkmn ids
+; if yes, rerun
+; if no, return number
+GetRandomPokemon:
+        call Random
+        cp $00
+        call z, GetRandomPokemon
+        cp $1f
+        call z, GetRandomPokemon
+        cp $20
+        call z, GetRandomPokemon
+        cp $32
+        call z, GetRandomPokemon
+        cp $38
+        call z, GetRandomPokemon
+        cp $3d
+        call z, GetRandomPokemon
+        cp $3e
+        call z, GetRandomPokemon
+        cp $3f
+        call z, GetRandomPokemon
+        cp $43
+        call z, GetRandomPokemon
+        cp $44
+        call z, GetRandomPokemon
+        cp $45
+        call z, GetRandomPokemon
+        cp $4f
+        call z, GetRandomPokemon
+        cp $50
+        call z, GetRandomPokemon
+        cp $51
+        call z, GetRandomPokemon
+        cp $56
+        call z, GetRandomPokemon
+        cp $57
+        call z, GetRandomPokemon
+        cp $5e
+        call z, GetRandomPokemon
+        cp $5f
+        call z, GetRandomPokemon
+        cp $73
+        call z, GetRandomPokemon
+        cp $79
+        call z, GetRandomPokemon
+        cp $7a
+        call z, GetRandomPokemon
+        cp $7f
+        call z, GetRandomPokemon
+        cp $86
+        call z, GetRandomPokemon
+        cp $87
+        call z, GetRandomPokemon
+        cp $89
+        call z, GetRandomPokemon
+        cp $8c
+        call z, GetRandomPokemon
+        cp $92
+        call z, GetRandomPokemon
+        cp $9c
+        call z, GetRandomPokemon
+        cp $9f
+        call z, GetRandomPokemon
+        cp $a0
+        call z, GetRandomPokemon
+        cp $a1
+        call z, GetRandomPokemon
+        cp $a2
+        call z, GetRandomPokemon
+        cp $ac
+        call z, GetRandomPokemon
+        cp $ae
+        call z, GetRandomPokemon
+        cp $af
+        call z, GetRandomPokemon
+        cp $b5
+        call z, GetRandomPokemon
+        cp $b6
+        call z, GetRandomPokemon
+        cp $b7
+        call z, GetRandomPokemon
+        cp $b8
+        call z, GetRandomPokemon
+        cp $bf ; If the random number is greater than the largest pokemon id
+        call nc, GetRandomPokemon
+        ret
 
 INCLUDE "data/wild/probabilities.asm"
