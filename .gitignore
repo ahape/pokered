@@ -28,3 +28,6 @@
 *.sn*
 *.sa*
 *.sg1
+
+# custom files
+*.txt
