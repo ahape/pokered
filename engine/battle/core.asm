@@ -5426,8 +5426,13 @@ MoveHitTest:
 ; if the random number generated is greater than or equal to the scaled accuracy, the move misses
 ; note that this means that even the highest accuracy is still just a 255/256 chance, not 100%
 	call BattleRandom
+; We get the 1/256 glitch when the random number and the scaled acc
+; value are BOTH 255 (because cp 255,255 will set the nc flag).
+; Out fix here is to make sure the random number will never be 255, 
+; thus ensuring we avoid that.
+        and $fe
 	cp b
-	jr nc, .moveMissed
+	jr nc, .moveMissed ; if no carry flag set, then the move misses
 	ret
 .moveMissed
 	xor a
@@ -5457,7 +5462,7 @@ CalcHitChance:
 	ld b, a
 	ld a, [wEnemyMonEvasionMod]
 	ld c, a
-	jr z, .next
+	jr z, .next ; at this point `b` acc mod, `c` is evasion mod
 ; values for enemy turn
 	ld hl, wEnemyMoveAccuracy
 	ld a, [wEnemyMonAccuracyMod]
