@@ -1603,6 +1603,13 @@ ItemUseCardKey:
 INCLUDE "data/events/card_key_coords.asm"
 
 ItemUsePokedoll:
+	ld a, [wCurMap]
+	cp POKEMON_TOWER_6F
+	jr nz, .continue
+	ld a, [wEnemyMonSpecies2]
+	cp RESTLESS_SOUL
+        jp z, ItemUseNotTime
+.continue
 	ld a, [wIsInBattle]
 	dec a
 	jp nz, ItemUseNotTime
