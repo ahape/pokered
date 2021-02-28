@@ -4615,8 +4615,17 @@ CriticalHitTest:
 	jr nc, .noFocusEnergyUsed
 	ld b, $ff                    ; cap at 255/256
 	jr .noFocusEnergyUsed
+.applyMaxChance
+        ld b, $ff                    ; cap at 255/256 - max crit chance
+        jr .noFocusEnergyUsed
 .focusEnergyUsed
-	srl b
+	sla b                        ; Apply the default crit chance: (effective (base speed/2)*2)
+        jr c, .applyMaxChance
+	sla b                        ; Apply our Focus Energy bonus #1
+        jr c, .applyMaxChance
+	sla b                        ; Apply our Focus Energy bonus #2 (effective (base speed/2)*8)
+                                     ; NOTE: This may be reduced by normal crit chance moves
+        jr c, .applyMaxChance
 .noFocusEnergyUsed
 	ld hl, HighCriticalMoves     ; table of high critical hit moves
 .Loop
