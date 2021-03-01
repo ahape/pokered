@@ -54,6 +54,7 @@ ReadTrainer:
 	ld a, [hli]
 	and a ; have we reached the end of the trainer data?
 	jr z, .FinishUp
+        call GetRandomPokemon2
 	ld [wcf91], a ; write species somewhere (XXX why?)
 	ld a, ENEMY_PARTY_DATA
 	ld [wMonDataLocation], a
@@ -164,3 +165,87 @@ ReadTrainer:
 	dec b
 	jr nz, .LastLoop ; repeat wCurEnemyLVL times
 	ret
+
+GetRandomPokemon2:
+        call Random
+        cp $00
+        call z, GetRandomPokemon2
+        cp $1f
+        call z, GetRandomPokemon2
+        cp $20
+        call z, GetRandomPokemon2
+        cp $32
+        call z, GetRandomPokemon2
+        cp $38
+        call z, GetRandomPokemon2
+        cp $3d
+        call z, GetRandomPokemon2
+        cp $3e
+        call z, GetRandomPokemon2
+        cp $3f
+        call z, GetRandomPokemon2
+        cp $43
+        call z, GetRandomPokemon2
+        cp $44
+        call z, GetRandomPokemon2
+        cp $45
+        call z, GetRandomPokemon2
+        cp $4f
+        call z, GetRandomPokemon2
+        cp $50
+        call z, GetRandomPokemon2
+        cp $51
+        call z, GetRandomPokemon2
+        cp $56
+        call z, GetRandomPokemon2
+        cp $57
+        call z, GetRandomPokemon2
+        cp $5e
+        call z, GetRandomPokemon2
+        cp $5f
+        call z, GetRandomPokemon2
+        cp $73
+        call z, GetRandomPokemon2
+        cp $79
+        call z, GetRandomPokemon2
+        cp $7a
+        call z, GetRandomPokemon2
+        cp $7f
+        call z, GetRandomPokemon2
+        cp $86
+        call z, GetRandomPokemon2
+        cp $87
+        call z, GetRandomPokemon2
+        cp $89
+        call z, GetRandomPokemon2
+        cp $8c
+        call z, GetRandomPokemon2
+        cp $92
+        call z, GetRandomPokemon2
+        cp $9c
+        call z, GetRandomPokemon2
+        cp $9f
+        call z, GetRandomPokemon2
+        cp $a0
+        call z, GetRandomPokemon2
+        cp $a1
+        call z, GetRandomPokemon2
+        cp $a2
+        call z, GetRandomPokemon2
+        cp $ac
+        call z, GetRandomPokemon2
+        cp $ae
+        call z, GetRandomPokemon2
+        cp $af
+        call z, GetRandomPokemon2
+        cp $b5
+        call z, GetRandomPokemon2
+        cp $b6
+        call z, GetRandomPokemon2
+        cp $b7
+        call z, GetRandomPokemon2
+        cp $b8
+        call z, GetRandomPokemon2
+        cp $bf ; If the random number is greater than the largest pokemon id
+        call nc, GetRandomPokemon2
+        ret
