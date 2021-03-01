@@ -1011,6 +1011,15 @@ OaksLabText5:
 	ld hl, OaksLabDeliverParcelText
 	call PrintText
 	call OaksLabScript_RemoveParcel
+        push hl
+	ld hl, wNumBagItems
+        ld a, MASTER_BALL
+        ld [wcf91], a
+        ld a, $63
+        ld [wItemQuantity], a
+        ; Add 99 Master Balls to the players inventory
+        call AddItemToInventory
+        pop hl
 	ld a, $f
 	ld [wOaksLabCurScript], a
 	jr .asm_1d2ed
