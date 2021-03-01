@@ -198,10 +198,10 @@ RhydonEvosMoves:
 	db 0
 ; Learnset
 	db 30, STOMP
-	db 35, TAIL_WHIP
+	db 35, EARTHQUAKE
 	db 40, FURY_ATTACK
 	db 48, HORN_DRILL
-	db 55, LEER
+	db 55, SCREECH
 	db 64, TAKE_DOWN
 	db 0
 
@@ -212,7 +212,7 @@ KangaskhanEvosMoves:
 	db 26, BITE
 	db 31, TAIL_WHIP
 	db 36, MEGA_PUNCH
-	db 41, LEER
+	db 41, COUNTER
 	db 46, DIZZY_PUNCH
 	db 0
 
@@ -259,6 +259,7 @@ VoltorbEvosMoves:
 	db EV_LEVEL, 30, ELECTRODE
 	db 0
 ; Learnset
+	db 7, THUNDERSHOCK
 	db 17, SONICBOOM
 	db 22, SELFDESTRUCT
 	db 29, LIGHT_SCREEN
@@ -307,6 +308,7 @@ ExeggutorEvosMoves:
 	db 0
 ; Learnset
 	db 28, STOMP
+	db 33, PSYBEAM
 	db 0
 
 LickitungEvosMoves:
@@ -314,7 +316,7 @@ LickitungEvosMoves:
 	db 0
 ; Learnset
 	db 7, STOMP
-	db 15, DISABLE
+	db 15, LICK
 	db 23, DEFENSE_CURL
 	db 31, SLAM
 	db 39, SCREECH
@@ -385,7 +387,7 @@ CuboneEvosMoves:
 	db 31, FOCUS_ENERGY
 	db 38, THRASH
 	db 43, BONEMERANG
-	db 46, RAGE
+	db 46, DIG
 	db 0
 
 RhyhornEvosMoves:
@@ -435,7 +437,7 @@ GyaradosEvosMoves:
 ; Learnset
 	db 20, BITE
 	db 25, DRAGON_RAGE
-	db 32, LEER
+	db 32, FLY
 	db 41, HYDRO_PUMP
 	db 52, HYPER_BEAM
 	db 0
@@ -485,7 +487,7 @@ ScytherEvosMoves:
 	db 24, DOUBLE_TEAM
 	db 29, SLASH
 	db 35, SWORDS_DANCE
-	db 42, AGILITY
+	db 42, GUILLOTINE
 	db 0
 
 StaryuEvosMoves:
@@ -518,6 +520,7 @@ PinsirEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
+	db 15, CUT
 	db 25, SEISMIC_TOSS
 	db 30, GUILLOTINE
 	db 36, FOCUS_ENERGY
@@ -530,6 +533,7 @@ TangelaEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
+        db 15, VINE_WHIP
 	db 29, ABSORB
 	db 32, POISONPOWDER
 	db 36, STUN_SPORE
@@ -943,7 +947,7 @@ DoduoEvosMoves:
 	db 20, GROWL
 	db 24, FURY_ATTACK
 	db 30, DRILL_PECK
-	db 36, RAGE
+	db 36, FLY
 	db 40, TRI_ATTACK
 	db 44, AGILITY
 	db 0
@@ -977,7 +981,7 @@ MoltresEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 51, LEER
+	db 51, FIRE_BLAST
 	db 55, AGILITY
 	db 60, SKY_ATTACK
 	db 0
@@ -1054,7 +1058,7 @@ VulpixEvosMoves:
 	db 0
 ; Learnset
 	db 16, QUICK_ATTACK
-	db 21, ROAR
+	db 21, FIRE_PUNCH
 	db 28, CONFUSE_RAY
 	db 35, FLAMETHROWER
 	db 42, FIRE_SPIN
