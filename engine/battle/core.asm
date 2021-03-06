@@ -6579,6 +6579,7 @@ ApplyBadgeStatBoost2:
 	ld [hli], a
 	ld a, LOW(MAX_STAT_VALUE)
 	ld [hld], a
+        ret
 
 ApplyBadgeStatBoost:
         push hl ; push these things onto the stack just in case?
