@@ -99,6 +99,7 @@ INCLUDE "engine/battle/move_effects/conversion.asm"
 INCLUDE "engine/battle/move_effects/haze.asm"
 INCLUDE "engine/battle/get_trainer_name.asm"
 INCLUDE "engine/math/random.asm"
+INCLUDE "engine/math/get_random_pokemon.asm"
 
 
 SECTION "Battle Engine 2", ROMX

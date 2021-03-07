@@ -54,7 +54,7 @@ ReadTrainer:
 	ld a, [hli]
 	and a ; have we reached the end of the trainer data?
 	jr z, .FinishUp
-        call GetRandomPokemon2
+        call GetRandomPokemon
 	ld [wcf91], a ; write species somewhere (XXX why?)
 	ld a, ENEMY_PARTY_DATA
 	ld [wMonDataLocation], a
@@ -165,87 +165,3 @@ ReadTrainer:
 	dec b
 	jr nz, .LastLoop ; repeat wCurEnemyLVL times
 	ret
-
-GetRandomPokemon2:
-        call Random
-        cp $00
-        jr z, GetRandomPokemon2
-        cp $1f
-        jr z, GetRandomPokemon2
-        cp $20
-        jr z, GetRandomPokemon2
-        cp $32
-        jr z, GetRandomPokemon2
-        cp $38
-        jr z, GetRandomPokemon2
-        cp $3d
-        jr z, GetRandomPokemon2
-        cp $3e
-        jr z, GetRandomPokemon2
-        cp $3f
-        jr z, GetRandomPokemon2
-        cp $43
-        jr z, GetRandomPokemon2
-        cp $44
-        jr z, GetRandomPokemon2
-        cp $45
-        jr z, GetRandomPokemon2
-        cp $4f
-        jr z, GetRandomPokemon2
-        cp $50
-        jr z, GetRandomPokemon2
-        cp $51
-        jr z, GetRandomPokemon2
-        cp $56
-        jr z, GetRandomPokemon2
-        cp $57
-        jr z, GetRandomPokemon2
-        cp $5e
-        jr z, GetRandomPokemon2
-        cp $5f
-        jr z, GetRandomPokemon2
-        cp $73
-        jr z, GetRandomPokemon2
-        cp $79
-        jr z, GetRandomPokemon2
-        cp $7a
-        jr z, GetRandomPokemon2
-        cp $7f
-        jr z, GetRandomPokemon2
-        cp $86
-        jr z, GetRandomPokemon2
-        cp $87
-        jr z, GetRandomPokemon2
-        cp $89
-        jr z, GetRandomPokemon2
-        cp $8c
-        jr z, GetRandomPokemon2
-        cp $92
-        jr z, GetRandomPokemon2
-        cp $9c
-        jr z, GetRandomPokemon2
-        cp $9f
-        jr z, GetRandomPokemon2
-        cp $a0
-        jr z, GetRandomPokemon2
-        cp $a1
-        jr z, GetRandomPokemon2
-        cp $a2
-        jp z, GetRandomPokemon2
-        cp $ac
-        jp z, GetRandomPokemon2
-        cp $ae
-        jp z, GetRandomPokemon2
-        cp $af
-        jp z, GetRandomPokemon2
-        cp $b5
-        jp z, GetRandomPokemon2
-        cp $b6
-        jp z, GetRandomPokemon2
-        cp $b7
-        jp z, GetRandomPokemon2
-        cp $b8
-        jp z, GetRandomPokemon2
-        cp $bf ; If the random number is greater than the largest pokemon id
-        jp nc, GetRandomPokemon2
-        ret
