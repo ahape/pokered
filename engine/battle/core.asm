@@ -5421,9 +5421,10 @@ MoveHitTest:
 	call BattleRandom
 ; We get the 1/256 glitch when the random number and the scaled acc
 ; value are BOTH 255 (because cp 255,255 will set the nc flag).
-; Out fix here is to make sure the random number will never be 255, 
+; Our fix here is to make sure the random number will never be 255, 
 ; thus ensuring we avoid that.
-        and $fe
+        add 1 ; 255 -> 0; All other nums +1
+        sbc 1 ; 0 -> 254; All other nums -1
 	cp b
 	jr nc, .moveMissed ; if no carry flag set, then the move misses
 	ret
