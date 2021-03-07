@@ -6587,9 +6587,9 @@ ApplyBadgeStatBoost:
         push bc
         push de
         call ApplyBadgeStatBoost2
-        pop hl
-        pop bc
         pop de
+        pop bc
+        pop hl
 	ret
 
 ApplyBadgeStatBoosts:
