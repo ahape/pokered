@@ -2018,7 +2018,13 @@ DisplayBattleMenu::
 	dec a
 	jp nz, .handleBattleMenuInput
 	ld hl, wPlayerName
-	ld de, wTemp1
+    ; The "old man/missingo glitch" was caused by storing our players
+    ; name at an address we use for wild pokemon data.
+    ; A fitting solution seems to be to reserve an unused space in memory
+    ; to use instead.
+    ; For a cool video (series) explaining the glitch in detail, check out:
+    ; https://www.youtube.com/watch?v=p8OBktd42GI
+	ld de, wPlayerNameBackup
 	ld bc, NAME_LENGTH
 	call CopyData
 	ld hl, .oldManName
@@ -4153,9 +4159,12 @@ GetDamageVarsForPlayerAttack:
 	ld a, [wCriticalHitOrOHKO]
 	and a ; check for critical hit
 	jr z, .scaleStats
-	;ld c, 3 ; defense stat
-	;call GetEnemyMonStat
-        ld hl, wEnemyMonDefense
+    ; Get the *current* defense stat of the enemy Pokemon
+    ; instead of original defense stat.
+    ; This fixes the glitch where, for example, a crit 
+    ; Tackle against a Metapod that's Hardened incurs
+    ; so much damage (bypassing the effect of the Harden).
+    ld hl, wEnemyMonDefense
 	ld a, [hli]
 	ld b, a
 	ld a, [hld]
@@ -4185,10 +4194,7 @@ GetDamageVarsForPlayerAttack:
 	ld a, [wCriticalHitOrOHKO]
 	and a ; check for critical hit
 	jr z, .scaleStats
-; in the case of a critical hit, reset the player's and enemy's specials to their base values
-	;ld c, 5 ; special stat
-	;call GetEnemyMonStat 
-        ld hl, wEnemyMonSpecial
+    ld hl, wEnemyMonSpecial
 	ld a, [hli]
 	ld b, a
 	ld a, [hld]
@@ -4276,8 +4282,6 @@ GetDamageVarsForEnemyAttack:
 	ld b, a
 	ld c, [hl]
 	push bc
-	;ld c, 2 ; attack stat
-	;call GetEnemyMonStat
 	ld hl, wEnemyMonAttack
 	pop bc
 	jr .scaleStats
@@ -4308,8 +4312,6 @@ GetDamageVarsForEnemyAttack:
 	ld b, a
 	ld c, [hl]
 	push bc
-	;ld c, 5 ; special stat
-	;call GetEnemyMonStat
 	ld hl, wEnemyMonAttack
 	pop bc
 ; if either the offensive or defensive stat is too large to store in a byte, scale both stats by dividing them by 4
@@ -4609,15 +4611,20 @@ CriticalHitTest:
 	ld b, $ff                    ; cap at 255/256
 	jr .noFocusEnergyUsed
 .applyMaxChance
-        ld b, $ff                    ; cap at 255/256 - max crit chance
+        ld b, $ff                ; cap at 255/256 (max possible crit chance)
         jr .noFocusEnergyUsed
 .focusEnergyUsed
-	sla b                        ; Apply the default crit chance: (effective (base speed/2)*2)
+	sla b                        ; Apply the default crit chance: (base speed/2)*2
         jr c, .applyMaxChance
-	sla b                        ; Apply our Focus Energy bonus #1
+	sla b                        ; Apply our Focus Energy bonus #1: (base speed/2)*4
+                                 ; NOTE: This fixes the bug where the original programmers
+                                 ; used right-shift instead of left-shift, thus *reducing*
+                                 ; the critical hit chance.
         jr c, .applyMaxChance
-	sla b                        ; Apply our Focus Energy bonus #2 (effective (base speed/2)*8)
-                                     ; NOTE: This may be reduced by normal crit chance moves
+	sla b                        ; Apply our Focus Energy bonus #2: (base speed/2)*8.
+                                 ; Chances are that the pokemon is using a "default" crit
+                                 ; chance move, in which case we'll deduct (/=2) a bonus.
+                                 ; Thus, most the time leaving the bonus at default * 2.
         jr c, .applyMaxChance
 .noFocusEnergyUsed
 	ld hl, HighCriticalMoves     ; table of high critical hit moves
@@ -5420,11 +5427,11 @@ MoveHitTest:
 ; note that this means that even the highest accuracy is still just a 255/256 chance, not 100%
 	call BattleRandom
 ; We get the 1/256 glitch when the random number and the scaled acc
-; value are BOTH 255 (because cp 255,255 will set the nc flag).
+; value are BOTH 255 (because cp 255,255 will set the `nc` flag).
 ; Our fix here is to make sure the random number will never be 255, 
-; thus ensuring we avoid that.
-        add 1 ; 255 -> 0; All other nums +1
-        sbc 1 ; 0 -> 254; All other nums -1
+; thus ensuring we always set the `c` flag.
+    add 1 ; 255 -> 0; All other nums +1
+    sbc 1 ; 0 -> 254; All other nums -1
 	cp b
 	jr nc, .moveMissed ; if no carry flag set, then the move misses
 	ret
@@ -5456,7 +5463,7 @@ CalcHitChance:
 	ld b, a
 	ld a, [wEnemyMonEvasionMod]
 	ld c, a
-	jr z, .next ; at this point `b` acc mod, `c` is evasion mod
+	jr z, .next
 ; values for enemy turn
 	ld hl, wEnemyMoveAccuracy
 	ld a, [wEnemyMonAccuracyMod]
