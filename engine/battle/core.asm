@@ -1655,6 +1655,7 @@ LoadBattleMonFromParty:
 	ld bc, 1 + NUM_STATS * 2
 	call CopyData
 	call ApplyBurnAndParalysisPenaltiesToPlayer
+    ld h, $0
 	call ApplyBadgeStatBoosts
 	ld a, $7 ; default stat modifier
 	ld b, NUM_STAT_MODS
@@ -6557,55 +6558,33 @@ CalculateModifiedStat:
 	pop bc
 	ret
 
-ApplyBadgeStatBoost2:
-        ; Took the body of this fn from ApplyBadgeStatBoosts.applyBoostToStat
-        ld hl, wBattleMonAttack ; get attack addr
-        ld b, $0 ; nullify b in bc (both b and c contain the same info)
-        sla c ; offset * 2 so that we acct for 2 addr per stat
-        add hl, bc ; apply the offset to the addr
-	ld a, [hli]
-	ld d, a
-	ld e, [hl]
-	srl d
-	rr e
-	srl d
-	rr e
-	srl d
-	rr e
-	ld a, [hl]
-	add e
-	ld [hld], a
-	ld a, [hl]
-	adc d
-	ld [hli], a
-	ld a, [hld]
-	sub LOW(MAX_STAT_VALUE)
-	ld a, [hl]
-	sbc HIGH(MAX_STAT_VALUE)
-	ret c
-	ld a, HIGH(MAX_STAT_VALUE)
-	ld [hli], a
-	ld a, LOW(MAX_STAT_VALUE)
-	ld [hld], a
-        ret
+; Puts bit A * 2 of B into CF
+; @param A - The stat offset (0=Atk,1=Def,2=Spd,3=Spc)
+; @param B - Bitmap of badges, boosts are on even bits (bit 0=Atk, 2=Def, ...)
+; @destroy A
+; @destroy B
+EvenBitToCarry:
+    inc a
+.loop
+    srl b
+    dec a
+    ret z
+    srl b
+    jr .loop
+    ret
 
-ApplyBadgeStatBoost:
-        push hl ; push these things onto the stack just in case?
-        push bc
-        push de
-        call ApplyBadgeStatBoost2
-        pop de
-        pop bc
-        pop hl
-	ret
-
+; @param H - 1 if this is for a single stat
+; @param C - Stat offset (used if this is for a single stat)
 ApplyBadgeStatBoosts:
 	ld a, [wLinkState]
 	cp LINK_STATE_BATTLING
 	ret z ; return if link battle
 	ld a, [wObtainedBadges]
 	ld b, a
+    ld a, h
 	ld hl, wBattleMonAttack
+    and a ; Check if our flag is set
+    jr nz, .singleStatAdjustment
 	ld c, $4
 ; the boost is applied for badges whose bit position is even
 ; the order of boosts matches the order they are laid out in RAM
@@ -6622,6 +6601,14 @@ ApplyBadgeStatBoosts:
 	dec c
 	jr nz, .loop
 	ret
+
+.singleStatAdjustment
+    ld a, c
+    call EvenBitToCarry
+    ret nc ; Check if we have the badge for the stat
+    ld b, $0
+    sla c ; Get appropriate offset addr
+    add hl, bc
 
 ; multiply stat at hl by 1.125
 ; cap stat at MAX_STAT_VALUE

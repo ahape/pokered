@@ -235,6 +235,7 @@ GainExperience:
 	ld [wCalculateWhoseStats], a
 	callfar CalculateModifiedStats
 	callfar ApplyBurnAndParalysisPenaltiesToPlayer
+    ld h, $0
 	callfar ApplyBadgeStatBoosts
 	callfar DrawPlayerHUDAndHPBar
 	callfar PrintEmptyString
