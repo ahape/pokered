@@ -454,7 +454,7 @@ UpdateStat:
 	pop hl
 UpdateStatDone:
 	ldh a, [hWhoseTurn]
-    ld h, $1 ; Set arg for "single stat" when calling apply-boosts fn
+	ld h, $1 ; Set arg for "single stat" when calling apply-boosts fn
 	and a
 	call z, ApplyBadgeStatBoosts
 	ld b, c
@@ -673,7 +673,7 @@ UpdateLoweredStat:
 	pop hl
 UpdateLoweredStatDone:
 	ldh a, [hWhoseTurn]
-    ld h, $1 ; Set arg for "single stat" when calling apply-boosts fn
+	ld h, $1 ; Set arg for "single stat" when calling apply-boosts fn
 	and a
 	call nz, ApplyBadgeStatBoosts
 	ld b, c
