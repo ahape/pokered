@@ -1655,7 +1655,7 @@ LoadBattleMonFromParty:
 	ld bc, 1 + NUM_STATS * 2
 	call CopyData
 	call ApplyBurnAndParalysisPenaltiesToPlayer
-    ld h, $0
+	ld h, $0
 	call ApplyBadgeStatBoosts
 	ld a, $7 ; default stat modifier
 	ld b, NUM_STAT_MODS
@@ -2019,12 +2019,11 @@ DisplayBattleMenu::
 	dec a
 	jp nz, .handleBattleMenuInput
 	ld hl, wPlayerName
-    ; The "old man/missingo glitch" was caused by storing our players
-    ; name at an address we use for wild pokemon data.
-    ; A fitting solution seems to be to reserve an unused space in memory
-    ; to use instead.
-    ; For a cool video (series) explaining the glitch in detail, check out:
-    ; https://www.youtube.com/watch?v=p8OBktd42GI
+	; The "old man/missingo glitch" was caused by storing our players
+	; name at an address we use for wild pokemon data.
+	; We fix that here by storing our players name in a unique address.
+	; For a cool video (series) explaining the glitch in detail, check out:
+	; https://www.youtube.com/watch?v=p8OBktd42GI
 	ld de, wPlayerNameBackup
 	ld bc, NAME_LENGTH
 	call CopyData
@@ -4160,12 +4159,12 @@ GetDamageVarsForPlayerAttack:
 	ld a, [wCriticalHitOrOHKO]
 	and a ; check for critical hit
 	jr z, .scaleStats
-    ; Get the *current* defense stat of the enemy Pokemon
-    ; instead of original defense stat.
-    ; This fixes the glitch where, for example, a crit 
-    ; Tackle against a Metapod that's Hardened incurs
-    ; so much damage (bypassing the effect of the Harden).
-    ld hl, wEnemyMonDefense
+	; Get the *current* defense stat of the enemy Pokemon
+	; instead of original defense stat.
+	; This fixes the glitch where, for example, a crit 
+	; Tackle against a Metapod that's Hardened incurs
+	; so much damage (bypassing the effect of the Harden).
+	ld hl, wEnemyMonDefense
 	ld a, [hli]
 	ld b, a
 	ld a, [hld]
@@ -4195,7 +4194,7 @@ GetDamageVarsForPlayerAttack:
 	ld a, [wCriticalHitOrOHKO]
 	and a ; check for critical hit
 	jr z, .scaleStats
-    ld hl, wEnemyMonSpecial
+	ld hl, wEnemyMonSpecial
 	ld a, [hli]
 	ld b, a
 	ld a, [hld]
@@ -4612,21 +4611,21 @@ CriticalHitTest:
 	ld b, $ff                    ; cap at 255/256
 	jr .noFocusEnergyUsed
 .applyMaxChance
-        ld b, $ff                ; cap at 255/256 (max possible crit chance)
-        jr .noFocusEnergyUsed
+		ld b, $ff                ; cap at 255/256 (max possible crit chance)
+		jr .noFocusEnergyUsed
 .focusEnergyUsed
 	sla b                        ; Apply the default crit chance: (base speed/2)*2
-        jr c, .applyMaxChance
+		jr c, .applyMaxChance
 	sla b                        ; Apply our Focus Energy bonus #1: (base speed/2)*4
-                                 ; NOTE: This fixes the bug where the original programmers
-                                 ; used right-shift instead of left-shift, thus *reducing*
-                                 ; the critical hit chance.
-        jr c, .applyMaxChance
+								 ; NOTE: This fixes the bug where the original programmers
+								 ; used right-shift instead of left-shift, thus *reducing*
+								 ; the critical hit chance.
+		jr c, .applyMaxChance
 	sla b                        ; Apply our Focus Energy bonus #2: (base speed/2)*8.
-                                 ; Chances are that the pokemon is using a "default" crit
-                                 ; chance move, in which case we'll deduct (/=2) a bonus.
-                                 ; Thus, most the time leaving the bonus at default * 2.
-        jr c, .applyMaxChance
+								 ; Chances are that the pokemon is using a "default" crit
+								 ; chance move, in which case we'll deduct (/=2) a bonus.
+								 ; Thus, most the time leaving the bonus at default * 2.
+		jr c, .applyMaxChance
 .noFocusEnergyUsed
 	ld hl, HighCriticalMoves     ; table of high critical hit moves
 .Loop
@@ -5431,8 +5430,8 @@ MoveHitTest:
 ; value are BOTH 255 (because cp 255,255 will set the `nc` flag).
 ; Our fix here is to make sure the random number will never be 255, 
 ; thus ensuring we always set the `c` flag.
-    add 1 ; 255 -> 0; All other nums +1
-    sbc 1 ; 0 -> 254; All other nums -1
+	add 1 ; 255 -> 0; All other nums +1
+	sbc 1 ; 0 -> 254; All other nums -1
 	cp b
 	jr nc, .moveMissed ; if no carry flag set, then the move misses
 	ret
@@ -6564,14 +6563,14 @@ CalculateModifiedStat:
 ; @destroy A
 ; @destroy B
 EvenBitToCarry:
-    inc a
+	inc a
 .loop
-    srl b
-    dec a
-    ret z
-    srl b
-    jr .loop
-    ret
+	srl b
+	dec a
+	ret z
+	srl b
+	jr .loop
+	ret
 
 ; @param H - 1 if this is for a single stat
 ; @param C - Stat offset (used if this is for a single stat)
@@ -6581,10 +6580,10 @@ ApplyBadgeStatBoosts:
 	ret z ; return if link battle
 	ld a, [wObtainedBadges]
 	ld b, a
-    ld a, h
+	ld a, h
 	ld hl, wBattleMonAttack
-    and a ; Check if our flag is set
-    jr nz, .singleStatAdjustment
+	and a ; Check if our flag is set
+	jr nz, .singleStatAdjustment
 	ld c, $4
 ; the boost is applied for badges whose bit position is even
 ; the order of boosts matches the order they are laid out in RAM
@@ -6603,13 +6602,13 @@ ApplyBadgeStatBoosts:
 	ret
 
 .singleStatAdjustment
-    ld a, c
-    call EvenBitToCarry
-    ret nc ; Check if we have the badge for the stat
-    ld d, $0
-    ld e, c
-    sla e ; Get appropriate offset addr
-    add hl, de
+	ld a, c
+	call EvenBitToCarry
+	ret nc ; Check if we have the badge for the stat
+	ld d, $0
+	ld e, c
+	sla e ; Get appropriate offset addr
+	add hl, de
 
 ; multiply stat at hl by 1.125
 ; cap stat at MAX_STAT_VALUE
