@@ -157,7 +157,7 @@ ItemUseBall:
 	jr nz, .notOldManBattle
 
 .oldManBattle
-	ld hl, wTemp1
+	ld hl, wPlayerNameBackup
 	ld de, wPlayerName
 	ld bc, NAME_LENGTH
 	call CopyData ; save the player's name in the Wild Monster data (part of the Cinnabar Island Missingno. glitch)
@@ -1603,12 +1603,15 @@ ItemUseCardKey:
 INCLUDE "data/events/card_key_coords.asm"
 
 ItemUsePokedoll:
+    ; Fix loophole where you don't the Silph Score in order to make it
+    ; through Pokemon Tower (since Ghost Marowak would run away when
+    ; the player deployed a Poke Doll).
 	ld a, [wCurMap]
 	cp POKEMON_TOWER_6F
 	jr nz, .continue
 	ld a, [wEnemyMonSpecies2]
 	cp RESTLESS_SOUL
-        jp z, ItemUseNotTime
+    jp z, ItemUseNotTime
 .continue
 	ld a, [wIsInBattle]
 	dec a
