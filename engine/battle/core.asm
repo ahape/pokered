@@ -6606,9 +6606,10 @@ ApplyBadgeStatBoosts:
     ld a, c
     call EvenBitToCarry
     ret nc ; Check if we have the badge for the stat
-    ld b, $0
-    sla c ; Get appropriate offset addr
-    add hl, bc
+    ld d, $0
+    ld e, c
+    sla e ; Get appropriate offset addr
+    add hl, de
 
 ; multiply stat at hl by 1.125
 ; cap stat at MAX_STAT_VALUE
