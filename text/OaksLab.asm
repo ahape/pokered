@@ -314,7 +314,13 @@ _OaksLabText25::
 	cont "these with you!"
 
 	para "<PLAYER> got"
-	line "#DEX from OAK!@"
+	line "#DEX from OAK!"
+
+	para "Oh, and these..."
+
+	para "<PLAYER> got"
+	line "99 MASTER BALLs"
+        cont "from OAK!@"
 	text_end
 
 _OaksLabText26::
