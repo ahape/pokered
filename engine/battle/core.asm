@@ -4150,31 +4150,12 @@ GetDamageVarsForPlayerAttack:
 	ld c, [hl] ; bc = enemy defense
 	ld a, [wEnemyBattleStatus3]
 	bit HAS_REFLECT_UP, a ; check for Reflect
-	jr z, .physicalAttackCritCheck
+	jr z, .loadPhysicalStatIntoHL
 ; if the enemy has used Reflect, double the enemy's defense
 	sla c
 	rl b
-.physicalAttackCritCheck
+.loadPhysicalStatIntoHL
 	ld hl, wBattleMonAttack
-	ld a, [wCriticalHitOrOHKO]
-	and a ; check for critical hit
-	jr z, .scaleStats
-	; Get the *current* defense stat of the enemy Pokemon
-	; instead of original defense stat.
-	; This fixes the glitch where, for example, a crit 
-	; Tackle against a Metapod that's Hardened incurs
-	; so much damage (bypassing the effect of the Harden).
-	ld hl, wEnemyMonDefense
-	ld a, [hli]
-	ld b, a
-	ld a, [hld]
-	ld c, a
-	push bc
-	ld hl, wBattleMonAttack
-	ld a, [wPlayerMonNumber]
-	ld bc, wPartyMon2 - wPartyMon1
-	call AddNTimes
-	pop bc
 	jr .scaleStats
 .specialAttack
 	ld hl, wEnemyMonSpecial
@@ -4183,28 +4164,14 @@ GetDamageVarsForPlayerAttack:
 	ld c, [hl] ; bc = enemy special
 	ld a, [wEnemyBattleStatus3]
 	bit HAS_LIGHT_SCREEN_UP, a ; check for Light Screen
-	jr z, .specialAttackCritCheck
+	jr z, .loadSpecialStatIntoHL
 ; if the enemy has used Light Screen, double the enemy's special
 	sla c
 	rl b
 ; reflect and light screen boosts do not cap the stat at MAX_STAT_VALUE, so weird things will happen during stats scaling
 ; if a Pokemon with 512 or more Defense has used Reflect, or if a Pokemon with 512 or more Special has used Light Screen
-.specialAttackCritCheck
+.loadSpecialStatIntoHL
 	ld hl, wBattleMonSpecial
-	ld a, [wCriticalHitOrOHKO]
-	and a ; check for critical hit
-	jr z, .scaleStats
-	ld hl, wEnemyMonSpecial
-	ld a, [hli]
-	ld b, a
-	ld a, [hld]
-	ld c, a
-	push bc
-	ld hl, wBattleMonSpecial
-	ld a, [wPlayerMonNumber]
-	ld bc, wPartyMon2 - wPartyMon1
-	call AddNTimes
-	pop bc
 ; if either the offensive or defensive stat is too large to store in a byte, scale both stats by dividing them by 4
 ; this allows values with up to 10 bits (values up to 1023) to be handled
 ; anything larger will wrap around
@@ -4264,26 +4231,12 @@ GetDamageVarsForEnemyAttack:
 	ld c, [hl] ; bc = player defense
 	ld a, [wPlayerBattleStatus3]
 	bit HAS_REFLECT_UP, a ; check for Reflect
-	jr z, .physicalAttackCritCheck
+	jr z, .loadPhysicalStatIntoHL
 ; if the player has used Reflect, double the player's defense
 	sla c
 	rl b
-.physicalAttackCritCheck
+.loadPhysicalStatIntoHL
 	ld hl, wEnemyMonAttack
-	ld a, [wCriticalHitOrOHKO]
-	and a ; check for critical hit
-	jr z, .scaleStats
-; in the case of a critical hit, reset the player's defense and the enemy's attack to their base values
-	ld hl, wBattleMonDefense
-	ld a, [wPlayerMonNumber]
-	ld bc, wPartyMon2 - wPartyMon1
-	call AddNTimes
-	ld a, [hli]
-	ld b, a
-	ld c, [hl]
-	push bc
-	ld hl, wEnemyMonAttack
-	pop bc
 	jr .scaleStats
 .specialAttack
 	ld hl, wBattleMonSpecial
@@ -4292,28 +4245,14 @@ GetDamageVarsForEnemyAttack:
 	ld c, [hl]
 	ld a, [wPlayerBattleStatus3]
 	bit HAS_LIGHT_SCREEN_UP, a ; check for Light Screen
-	jr z, .specialAttackCritCheck
+	jr z, .loadSpecialStatIntoHL
 ; if the player has used Light Screen, double the player's special
 	sla c
 	rl b
 ; reflect and light screen boosts do not cap the stat at MAX_STAT_VALUE, so weird things will happen during stats scaling
 ; if a Pokemon with 512 or more Defense has used Reflect, or if a Pokemon with 512 or more Special has used Light Screen
-.specialAttackCritCheck
+.loadSpecialStatIntoHL
 	ld hl, wEnemyMonSpecial
-	ld a, [wCriticalHitOrOHKO]
-	and a ; check for critical hit
-	jr z, .scaleStats
-; in the case of a critical hit, reset the player's and enemy's specials to their base values
-	ld hl, wBattleMonSpecial
-	ld a, [wPlayerMonNumber]
-	ld bc, wPartyMon2 - wPartyMon1
-	call AddNTimes
-	ld a, [hli]
-	ld b, a
-	ld c, [hl]
-	push bc
-	ld hl, wEnemyMonAttack
-	pop bc
 ; if either the offensive or defensive stat is too large to store in a byte, scale both stats by dividing them by 4
 ; this allows values with up to 10 bits (values up to 1023) to be handled
 ; anything larger will wrap around
