@@ -31,3 +31,6 @@
 
 # custom files
 *.txt
+
+# Visual Studio cache
+.vs/

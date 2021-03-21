@@ -5433,7 +5433,7 @@ MoveHitTest:
 	add 1 ; 255 -> 0; All other nums +1
 	sbc 1 ; 0 -> 254; All other nums -1
 	cp b
-	jr nc, .moveMissed ; if no carry flag set, then the move misses
+	jr nc, .moveMissed
 	ret
 .moveMissed
 	xor a
