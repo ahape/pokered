@@ -75,7 +75,7 @@ TryDoWildEncounter:
 	add hl, bc
 	ld a, [hli]
 	ld [wCurEnemyLVL], a
-        call GetRandomPokemon
+	call GetRandomPokemon
 	;ld a, [hl] ; I think this is the place we need to randomize the encounter
 	ld [wcf91], a
 	ld [wEnemyMonSpecies2], a

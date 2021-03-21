@@ -54,7 +54,7 @@ ReadTrainer:
 	ld a, [hli]
 	and a ; have we reached the end of the trainer data?
 	jp z, .FinishUp
-        call GetRandomPokemon
+	call GetRandomPokemon
 	ld [wcf91], a ; write species somewhere (XXX why?)
 	ld a, ENEMY_PARTY_DATA
 	ld [wMonDataLocation], a
@@ -71,7 +71,7 @@ ReadTrainer:
 	and a ; have we reached the end of the trainer data?
 	jr z, .AddLoneMove
 	ld [wCurEnemyLVL], a
-        call GetRandomPokemon ; get a random pokemon instead
+	call GetRandomPokemon ; get a random pokemon instead
 	inc hl ; skip past the address where the trainer's pokemon is
 	ld [wcf91], a
 	ld a, ENEMY_PARTY_DATA
