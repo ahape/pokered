@@ -320,7 +320,7 @@ _OaksLabText25::
 
 	para "<PLAYER> got"
 	line "99 MASTER BALLs"
-        cont "from OAK!@"
+	cont "from OAK!@"
 	text_end
 
 _OaksLabText26::
