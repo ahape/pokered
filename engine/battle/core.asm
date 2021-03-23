@@ -4550,21 +4550,21 @@ CriticalHitTest:
 	ld b, $ff                    ; cap at 255/256
 	jr .noFocusEnergyUsed
 .applyMaxChance
-		ld b, $ff                ; cap at 255/256 (max possible crit chance)
-		jr .noFocusEnergyUsed
+	ld b, $ff                    ; cap at 255/256 (max possible crit chance)
+	jr .noFocusEnergyUsed
 .focusEnergyUsed
 	sla b                        ; Apply the default crit chance: (base speed/2)*2
-		jr c, .applyMaxChance
+	jr c, .applyMaxChance
 	sla b                        ; Apply our Focus Energy bonus #1: (base speed/2)*4
 ; NOTE: This fixes the bug where the original programmers
 ; used right-shift instead of left-shift, thus *reducing*
 ; the critical hit chance.
-		jr c, .applyMaxChance
+	jr c, .applyMaxChance
 	sla b                        ; Apply our Focus Energy bonus #2: (base speed/2)*8.
 ; Chances are that the pokemon is using a "default" crit
 ; chance move, in which case we'll deduct a bonus (/=2).
 ; Thus, most the time leaving the bonus at default * 2.
-		jr c, .applyMaxChance
+	jr c, .applyMaxChance
 .noFocusEnergyUsed
 	ld hl, HighCriticalMoves     ; table of high critical hit moves
 .Loop
