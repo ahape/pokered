@@ -14,6 +14,8 @@ GetRandomPokemon_::
 	jr z, GetRandomPokemon_
 	cp $32
 	jr z, GetRandomPokemon_
+	cp $34
+	jr z, GetRandomPokemon_
 	cp $38
 	jr z, GetRandomPokemon_
 	cp $3d
@@ -63,9 +65,9 @@ GetRandomPokemon_::
 	cp $9c
 	jr z, GetRandomPokemon_
 	cp $9f
-	jr z, GetRandomPokemon_
+	jr z, GetRandomPokemon_; Can't use relative jump (jr) beyond this point.
 	cp $a0
-	jr z, GetRandomPokemon_ ; Can't use relative jump (jr) beyond this point.
+	jp z, GetRandomPokemon_ 
 	cp $a1
 	jp z, GetRandomPokemon_
 	cp $a2
