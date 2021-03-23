@@ -21,7 +21,7 @@ To set up the repository, see [**INSTALL.md**](INSTALL.md).
     `<` comparison when it should have been a `<=` comparison (allowing one
     value to sneakily show up false) when checking `if (randomValue < moveAccuracy)`.
 -   Fixed Focus Energy/Dire Hit glitch. This glitch made it so that the move
-    Focus Energy and the item Dire Hit (which are virtual identical in their
+    Focus Energy and the item Dire Hit (which are virtually identical in their
     effects) decrease your chance of getting a critical hit, rather than
     boosting it.
 -   Changed "critical hit" mechanics. In Pokemon Red/Blue, critical hits would
@@ -33,7 +33,7 @@ To set up the repository, see [**INSTALL.md**](INSTALL.md).
     example: if you used Tail Whip on an enemy Pokemon multiple times and then
     you scored a critical hit Tackle on them, there's a chance that your
     critical hit would incur less damage than a normal hit since it's not
-    taking into account any their defense reductions.
+    taking into account any of their defense reductions.
 -   Changed certain move types. This includes moves like Gust, which _should_
     have been type "Flying", and Karate Chop, which _should_ have been type
     "Fighting" (in my opinion?). I also changed the effects of Counter so that is
@@ -52,15 +52,15 @@ To set up the repository, see [**INSTALL.md**](INSTALL.md).
 
 ### Just For Fun
 
--   All wild encounters and trainers consist of 100% **random** Pokemon. This
+-   Made it so all wild encounters and trainers consist of 100% **random** Pokemon. This
     means you can trudge through the grass just outside of Pallet Town and catch
     a level 3 Mewtwo (if you get lucky enough). This also means that Brock
-    (along with every other _special_ trainer) will have random Pokemon. These
+    (along with every other trainer) will have random Pokemon. These
     Pokemon are not predetermined, either. So every time you go through the Elite
     Four, you will be fighting different Pokemon. Their levels will all be the
     same as they would be during normal gameplay (same goes to the wild
     Pokemon).
--   Player starts with an option between Mew, Mew, and Mew. Mainly, because Mew
+-   Player now starts with an option between Mew, Mew, and Mew. Mainly, because Mew
     makes an awesome Pokemon for piling HMs onto. This becomes greatly
     beneficial later on in the game when you are trying to figure out which
     Pokemon should learn a particular HM move. HM moves are necessary to get
@@ -71,7 +71,7 @@ To set up the repository, see [**INSTALL.md**](INSTALL.md).
     have to worry about polluting your other Pokemon's moves. And then when you
     go to fight the Elite Four, you can just throw Mew into your PC in lieu of
     something better.
--   Professor Oak gives you 99 Master Balls along with the Pokedex. This meshes
+-   Professor Oak now gives you 99 Master Balls along with the Pokedex. This meshes
     really well with the "random encounters" customization. You're going to
     stumble across a lot of Pokemon you'll want to catch, and with this
     customization you won't have to waste any time dwindling down their HP
@@ -80,6 +80,8 @@ To set up the repository, see [**INSTALL.md**](INSTALL.md).
     adjustment because some Pokemon were only meant to be encountered later in
     the game, and so the developers didn't bother giving them any moves until
     way late (e.g. Moltres level 50, et al). Now it's unified and more predictable.
+    
+I'd like to think that these customizations make the gameplay equal parts harder _and_ easier. It's harder because you'll fight trainers with a **far** greater variety of Pokemon, so you'll need to have a pretty diverse ensemble. It's easier because you'll be able to catch any Pokemon you want. Overall, I added them so that the player could experience _all_ that Pokemon has to offer.
 
 ## See also
 
