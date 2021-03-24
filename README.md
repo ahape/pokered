@@ -2,15 +2,7 @@
 
 This is a disassembly of Pokémon Red and Blue.
 
-It builds the following ROMs:
-
--   Pokemon Red (UE) [S][!].gb `sha1: ea9bcae617fdf159b045185467ae58b2e4a48b9a`
--   Pokemon Blue (UE) [S][!].gb `sha1: d7037c83e1ae5b39bde3c30787637ba1d4c48ce2`
--   BLUEMONS.GB (debug build) `sha1: 5b1456177671b79b263c614ea0e7cc9ac542e9c4`
-
-To set up the repository, see [**INSTALL.md**](INSTALL.md).
-
-## Customizations
+## Customizations made by me
 
 ### Bug fixes
 
@@ -38,8 +30,8 @@ To set up the repository, see [**INSTALL.md**](INSTALL.md).
     have been type "Flying", and Karate Chop, which _should_ have been type
     "Fighting" (in my opinion?). I also changed the effects of Counter so that is
     works against more than just Normal and Fighting types. There are other
-    moves and _learnsets_ that I tweaked to make the game a little more
-    interesting--and make certain Pokemon suck a little less, or a little less
+    moves and learnsets that I tweaked to make the game a little more
+    interesting--and make certain Pokemon either suck less or less
     godly.
 -   Patched a loophole that allowed the player to use a Poke Doll to get past
     the "Restless Soul" (Marowak) in the Pokemon Tower. This is a commonly
@@ -50,7 +42,7 @@ To set up the repository, see [**INSTALL.md**](INSTALL.md).
     the player to get their 6th item duplicated multiple times, as well as the
     ability to catch the Pokemon "Missingno."
 
-### Just For Fun
+### Just for fun
 
 -   Made it so all wild encounters and trainers consist of 100% **random** Pokemon. This
     means you can trudge through the grass just outside of Pallet Town and catch
@@ -78,10 +70,20 @@ To set up the repository, see [**INSTALL.md**](INSTALL.md).
     (while they dwindle down yours) in order to catch them. It's all guaranteed now.
 -   Made it so all Pokemon learn a move every 5 levels. I had to make this
     adjustment because some Pokemon were only meant to be encountered later in
-    the game, and so the developers didn't bother giving them any moves until
-    way late (e.g. Moltres level 50, et al). Now it's unified and more predictable.
+    the game, and so the developers didn't bother giving them any new moves until
+    way late (e.g. Moltres level 50, et al). Now it's normalized and more predictable.
     
-I'd like to think that these customizations make the gameplay equal parts harder _and_ easier. It's harder because you'll fight trainers with a **far** greater variety of Pokemon, so you'll need to have a pretty diverse ensemble. It's easier because you'll be able to catch any Pokemon you want. Overall, I added them so that the player could experience _all_ that Pokemon has to offer.
+I'd like to think that these customizations make the gameplay both harder _and_ easier. It's harder because you'll fight trainers with **far** stronger Pokemon, so you'll need to have a pretty well-rounded ensemble. It's easier because you'll be able to catch any Pokemon you want. Overall, I added these things so that the player could experience more of what these old school games has to offer.
+
+---
+
+This repo builds the following ROMs:
+
+-   Pokemon Red (UE) [S][!].gb `sha1: ea9bcae617fdf159b045185467ae58b2e4a48b9a`
+-   Pokemon Blue (UE) [S][!].gb `sha1: d7037c83e1ae5b39bde3c30787637ba1d4c48ce2`
+-   BLUEMONS.GB (debug build) `sha1: 5b1456177671b79b263c614ea0e7cc9ac542e9c4`
+
+To set up the repository, see [**INSTALL.md**](INSTALL.md).
 
 ## See also
 
