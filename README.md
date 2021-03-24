@@ -4,7 +4,7 @@ This is a disassembly of Pokémon Red and Blue.
 
 ## Customizations made by me
 
-### Bug fixes
+### Legacy bug fixes
 
 -   Fixed [Badge boost
     glitch](http://wiki.pokemonspeedruns.com/index.php/Badge_Boosts).
