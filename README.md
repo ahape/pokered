@@ -32,7 +32,8 @@ This is a disassembly of Pokémon Red and Blue.
     works against more than just Normal and Fighting types. There are other
     moves and learnsets that I tweaked to make the game a little more
     interesting--and make certain Pokemon either suck less or less
-    godly.
+    godly. I also made all "status" moves (e.g. Reflect, Leer, etc.) type "Normal".
+    The only thing this _truly_ affects is the special trainer battle AI.
 -   Patched a loophole that allowed the player to use a Poke Doll to get past
     the "Restless Soul" (Marowak) in the Pokemon Tower. This is a commonly
     exploited loophole in speedruns, as it allows the player to bypass the whole
