@@ -75,6 +75,8 @@ This is a disassembly of Pokémon Red and Blue.
     
 I'd like to think that these customizations make the gameplay both harder _and_ easier. It's harder because you'll fight trainers with **far** stronger Pokemon, so you'll need to have a pretty well-rounded ensemble. It's easier because you'll be able to catch any Pokemon you want. Overall, I added these things so that the player could experience more of what these old school games has to offer.
 
+Also, worth noting, these customizations essentially render Blue and Red identical. Their biggest difference was their exclusive sets of wild Pokemon. Now, the only differences are the UI colors, and which items are available in the Game Corner (please don't waste your time there).
+
 ---
 
 This repo builds the following ROMs:
