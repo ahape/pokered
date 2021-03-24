@@ -20,10 +20,10 @@ This is a disassembly of Pokémon Red and Blue.
     not take into account any stat reductions or increases the defending Pokemon
     currently held, and instead would plug their base stats into the damage
     determination formula. So, for instance, if you used Harden multiple times,
-    and then an enemy Pokemon scored a critical hit Tackle on you, it wouldn't
+    and then an enemy Pokemon scores a critical hit Tackle on you, it wouldn't
     take into account any of your defensive benefits from the Hardens. Another
     example: if you used Tail Whip on an enemy Pokemon multiple times and then
-    you scored a critical hit Tackle on them, there's a chance that your
+    you score a critical hit Tackle on them, there's a chance that your
     critical hit would incur less damage than a normal hit since it's not
     taking into account any of their defense reductions.
 -   Changed certain move types. This includes moves like Gust, which _should_
@@ -51,7 +51,7 @@ This is a disassembly of Pokémon Red and Blue.
     (along with every other trainer) will have random Pokemon. These
     Pokemon are not predetermined, either. So every time you go through the Elite
     Four, you will be fighting different Pokemon. Their levels will all be the
-    same as they would be during normal gameplay (same goes to the wild
+    same as they would be during normal gameplay (same goes for the wild
     Pokemon).
 -   Player now starts with an option between Mew, Mew, and Mew. Mainly, because Mew
     makes an awesome Pokemon for piling HMs onto. This becomes greatly
