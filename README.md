@@ -6,7 +6,7 @@ This is a disassembly of Pokémon Red and Blue.
 
 ### Legacy bug fixes
 
--   Fixed [Badge boost
+-   Fixed [badge boost
     glitch](http://wiki.pokemonspeedruns.com/index.php/Badge_Boosts).
 -   Fixed 1/256 glitch. This glitch allowed for a 1-in-256 chance that a move
     with 100% accuracy would miss. The programming error was a matter of using a
